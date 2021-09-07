@@ -106,9 +106,29 @@ This is the type returned by a succesful fetch.
 | Ping         | Number        | The proxy's latency in Milliseconds (ms) |
 | Time         | Number        | The timestamp of when this proxy was scanned |
 | Location     | ProxyLocation | The proxy's location informations |
-| Type         | Array<String> | The list of supported protocols |
+| Type         | Array\<String> | The list of supported protocols |
 | Failed       | Bool          | Wether or not scan was unsuccesful |
 | Anonimity    | String        | The proxy's anonimity level |
 | WorkingCount | Number        | How many times this proxy was succesfully tested  |
 | RecheckCount | Number        | How many times this proxy was checked |
 | Uptime       | Number        | The uptime ration of this proxy |
+
+### ProxyLocation
+
+This types defines a proxy's location informations.
+
+| Key         | Type   | Description |
+| ----------- | ------ | ----------- |
+| city        | String | The proxy's city |
+| continent   | String | The proxy's continent |
+| country     | String | The proxy's country |
+| countryCode | String | The proxy's country code|
+| ipName      | String | The ip's hostname |
+| ipType      | String | The ip's type |
+| isp         | String | The proxy's Internet Service Provider |
+| lat         | String | The proxy's latitude |
+| lon         | String | The proxy's longitude  |
+| org         | String | The proxy's host organisation |
+| query       | String | The query |
+| region      | String | The proxy's region |
+| status      | String | The localisation query status |
