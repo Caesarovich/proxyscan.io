@@ -1,0 +1,24 @@
+{
+  "name": "proxyscan.io",
+  "version": "1.0.0",
+  "description": "An API wrapper for proxyscan.io",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "Proxy",
+    "Proxies",
+    "API",
+    "Wrapper"
+  ],
+  "author": "Caesarovich",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@types/node": "^16.7.10"
+  }
+}
