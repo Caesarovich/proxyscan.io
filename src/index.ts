@@ -1,15 +1,48 @@
 import * as https from 'https';
 
 export interface FetchOptions {
+  /**
+   * Format api output
+   */
   format?: 'json' | 'txt';
+  /**
+   * Anonymity Level
+   */
   level?: 'transparent' | 'anonymous' | 'elite';
+  /**
+   * Proxy Protocol
+   */
   type?: 'http' | 'https' | 'socks4' | 'socks5';
+  /**
+   * Seconds the proxy was last checked
+   */
   last_check?: Number;
+  /**
+   * Proxies with a specific port.
+   * Must be between (1 - 65535).
+   */
   port?: Number;
+  /**
+   * How fast you get a response after you've sent out a request.
+   */
   ping?: Number;
+  /**
+   * How many proxies to list.
+   */
   limit?: Number;
+  /**
+   * How reliably a proxy has been running
+   */
   uptime?: Number;
+  /**
+   * Country of the proxy
+   * @example 'fr, en'
+   */
   country?: String;
+  /**
+   * Avoid proxy countries
+   * @example 'cn, us'
+   */
   not_country?: String;
 }
 
