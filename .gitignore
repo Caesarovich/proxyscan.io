@@ -3,3 +3,6 @@ node_modules
 
 # Ignore build directory
 dist
+
+# Ignore NPM packages
+*.tgz

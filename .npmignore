@@ -1,2 +1,5 @@
 # Ignore the source directory
 src
+
+# Ignore NPM packages
+*.tgz
