@@ -1,3 +1,5 @@
+![Logo](https://www.proxyscan.io/images/logo.png)
+
 # proxyscan.io
 
 ## A NodeJS wrapper for [proxyscan.io](https://proxyscan.io)'s API
