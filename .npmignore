@@ -5,4 +5,4 @@ src
 *.tgz
 
 # Ignore tsconfig
-.tsconfig
+tsconfig.json
