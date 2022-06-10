@@ -1,18 +1,18 @@
-import * as https from 'https';
+import * as https from "https";
 
 export interface FetchOptions {
   /**
    * Format api output
    */
-  format?: 'json' | 'txt';
+  format?: "json" | "txt";
   /**
    * Anonymity Level
    */
-  level?: 'transparent' | 'anonymous' | 'elite';
+  level?: "transparent" | "anonymous" | "elite";
   /**
    * Proxy Protocol
    */
-  type?: 'http' | 'https' | 'socks4' | 'socks5';
+  type?: "http" | "https" | "socks4" | "socks5";
   /**
    * Seconds the proxy was last checked
    */
@@ -83,33 +83,33 @@ function optionsToParams(options: FetchOptions): string {
     params.push(`${key}=${options[key]}`);
   }
 
-  return params.join('&');
+  return params.join("&");
 }
 
 export function fetchProxies(
-  options?: FetchOptions & { format: 'txt' }
+  options?: FetchOptions & { format: "txt" }
 ): Promise<String>;
 export function fetchProxies(options?: FetchOptions): Promise<Array<Proxy>>;
 export function fetchProxies(options?: FetchOptions) {
   return new Promise((resolve, reject) => {
-    const params = options ? optionsToParams(options) : '';
+    const params = options ? optionsToParams(options) : "";
     https
-      .get('https://www.proxyscan.io/api/proxy?' + params, (res) => {
-        let data: string = '';
+      .get("https://www.proxyscan.io/api/proxy?" + params, (res) => {
+        let data: string = "";
 
-        res.on('data', (d) => {
+        res.on("data", (d) => {
           data += d;
         });
 
-        res.on('end', () => {
+        res.on("end", () => {
           if (res.statusCode !== 200) return reject(res.statusMessage);
-          if (options?.format !== 'txt') {
+          if (options?.format !== "txt") {
             resolve(JSON.parse(data));
           } else {
             resolve(data);
           }
         });
       })
-      .on('error', reject);
+      .on("error", reject);
   });
 }
