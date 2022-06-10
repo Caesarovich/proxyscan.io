@@ -3,3 +3,6 @@ src
 
 # Ignore NPM packages
 *.tgz
+
+# Ignore tsconfig
+.tsconfig
