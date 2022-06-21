@@ -1,18 +1,18 @@
-import * as https from "https";
+import { got } from 'got';
+
+export type AnonymityLevel = 'transparent' | 'anonymous' | 'elite';
+
+export type ProxyProtocol = 'http' | 'https' | 'socks4' | 'socks5';
 
 export interface FetchOptions {
   /**
-   * Format api output
-   */
-  format?: "json" | "txt";
-  /**
    * Anonymity Level
    */
-  level?: "transparent" | "anonymous" | "elite";
+  level?: AnonymityLevel;
   /**
    * Proxy Protocol
    */
-  type?: "http" | "https" | "socks4" | "socks5";
+  type?: ProxyProtocol;
   /**
    * Seconds the proxy was last checked
    */
@@ -46,6 +46,20 @@ export interface FetchOptions {
   not_country?: String;
 }
 
+interface RawProxy {
+  Ip: string;
+  Port: number;
+  Ping: number;
+  Time: number;
+  Location: ProxyLocation;
+  Type: ProxyProtocol[];
+  Failed: boolean;
+  Anonymity: AnonymityLevel;
+  WorkingCount: number;
+  Uptime: number;
+  RecheckCount: number;
+}
+
 export interface ProxyLocation {
   city: string;
   continent: string;
@@ -63,53 +77,60 @@ export interface ProxyLocation {
 }
 
 export interface Proxy {
-  Ip: String;
-  Port: number;
-  Ping: number;
-  Time: number;
-  Location: ProxyLocation;
-  Type: Array<String>;
-  Failed: boolean;
-  Anonymity: String;
-  WorkingCount: number;
-  Uptime: number;
-  RecheckCount: number;
+  ip: string;
+  port: number;
+  ping: number;
+  time: number;
+  location: ProxyLocation;
+  types: ProxyProtocol[];
+  failed: boolean;
+  anonymity: AnonymityLevel;
+  workingCount: number;
+  uptime: number;
+  recheckCount: number;
 }
 
-function optionsToParams(options: FetchOptions): string {
-  let params: Array<string> = [];
+function parseRawProxy(raw: RawProxy): Proxy {
+  return {
+    ip: raw.Ip,
+    port: raw.Port,
+    ping: raw.Ping,
+    time: raw.Time,
+    location: raw.Location,
+    types: raw.Type,
+    failed: raw.Failed,
+    anonymity: raw.Anonymity,
+    workingCount: raw.WorkingCount,
+    uptime: raw.Uptime,
+    recheckCount: raw.RecheckCount,
+  };
+}
 
-  for (const key of Object.keys(options) as Array<keyof FetchOptions>) {
-    params.push(`${key}=${options[key]}`);
+function fetchOptionsToParams(options?: FetchOptions): URLSearchParams {
+  let params = new URLSearchParams();
+
+  if (!options) return params;
+
+  for (let key in options) {
+    const option = options[key as keyof FetchOptions];
+    if (option && options.hasOwnProperty(key)) {
+      params.set(key, option.toString());
+    }
   }
 
-  return params.join("&");
+  return params;
 }
 
-export function fetchProxies(
-  options?: FetchOptions & { format: "txt" }
-): Promise<String>;
-export function fetchProxies(options?: FetchOptions): Promise<Array<Proxy>>;
-export function fetchProxies(options?: FetchOptions) {
-  return new Promise((resolve, reject) => {
-    const params = options ? optionsToParams(options) : "";
-    https
-      .get("https://www.proxyscan.io/api/proxy?" + params, (res) => {
-        let data: string = "";
-
-        res.on("data", (d) => {
-          data += d;
-        });
-
-        res.on("end", () => {
-          if (res.statusCode !== 200) return reject(res.statusMessage);
-          if (options?.format !== "txt") {
-            resolve(JSON.parse(data));
-          } else {
-            resolve(data);
-          }
-        });
-      })
-      .on("error", reject);
+export async function fetchProxies(options?: FetchOptions): Promise<Proxy[]> {
+  const { body } = await got.get('https://www.proxyscan.io/api/proxy', {
+    searchParams: fetchOptionsToParams(options),
   });
+
+  const rawData: RawProxy[] = JSON.parse(body);
+  let proxies = [];
+
+  for (let proxy of rawData) {
+    proxies.push(parseRawProxy(proxy));
+  }
+  return proxies;
 }

@@ -36,49 +36,40 @@ const proxyscan-io = require('proxyscan.io');
 Then use the `fetchProxies` function to fetch proxies from the API.
 
 ```js
-const proxyscan-io = require('proxyscan.io');
+import { fetchProxies } from 'proxyscan.io';
 
-proxyscan-io.fetchProxies()
-  .then(console.log) // [ {Ip: 1.1.1.1, ...} ]
+fetchProxies()
+  .then(console.log) // [ {ip: 1.1.1.1, ...} ]
   .catch(console.error);
 ```
 
 ## 📔 Documentation
 
-### fetchProxies(options?: ProxyOptions)
-
-Since this library includes only this function, I recommend that you only import it:
-
-```js
-const { fetchProxies } = require('proxyscan.io');
-```
+### fetchProxies(options?: FetchOptions)
 
 The `fetchProxies` function will make an HTTP GET call to the API and retrieve results based on the specified options.
 
 **Example:**
 
 ```js
-const { fetchProxies } = require('proxyscan.io');
+import { fetchProxies } from 'proxyscan.io';
 
 fetchProxies().then(console.log);
 
 /*
   [
     {
-      "Ip": "185.208.100.72",
-      "Port": 4145,
-      "Ping": 21,
-      "Time": 1630973749,
+      "ip": "185.208.100.72",
+      "port": 4145,
+      "ping": 21,
+      "time": 1630973749,
       ...
     }
   ]
 */
 ```
 
-### Returns: Promise\<String> | Promise<Array<Proxy>>
-
-> Note: The return type depends on the `format?` option. If this options is set to `'txt'` then the function returns the raw data in a string.
-> Otherwise the function parses the JSON data and returns it as an array of proxies. See below.
+#### Returns: Promise<Proxy[]>
 
 ### FetchOptions
 
@@ -86,7 +77,6 @@ The fetch options allows for more precise API requests. I strongly recommend usi
 
 | Option      | Value                               | Description                                                 |
 | ----------- | ----------------------------------- | ----------------------------------------------------------- |
-| format      | 'json', 'txt'                       | Format api output                                           |
 | level       | 'transparent', 'anonymous', 'elite' | Anonymity Level                                             |
 | type        | 'http', 'https', 'socks4', 'socks5' | Proxy Protocol                                              |
 | last_check  | Number                              | Seconds the proxy was last checked                          |
@@ -105,17 +95,17 @@ This is the type returned by a succesful fetch.
 
 | Key          | Type           | Description                                      |
 | ------------ | -------------- | ------------------------------------------------ |
-| Ip           | String         | The proxy's IP address                           |
-| Port         | Number         | The proxy's port number                          |
-| Ping         | Number         | The proxy's latency in Milliseconds (ms)         |
-| Time         | Number         | The timestamp of when this proxy was scanned     |
-| Location     | ProxyLocation  | The proxy's location informations                |
-| Type         | Array\<String> | The list of supported protocols                  |
-| Failed       | Bool           | Wether or not scan was unsuccesful               |
-| Anonimity    | String         | The proxy's anonimity level                      |
-| WorkingCount | Number         | How many times this proxy was succesfully tested |
-| RecheckCount | Number         | How many times this proxy was checked            |
-| Uptime       | Number         | The uptime ration of this proxy                  |
+| ip           | String         | The proxy's IP address                           |
+| port         | Number         | The proxy's port number                          |
+| ping         | Number         | The proxy's latency in Milliseconds (ms)         |
+| time         | Number         | The timestamp of when this proxy was scanned     |
+| location     | ProxyLocation  | The proxy's location informations                |
+| type         | Array\<String> | The list of supported protocols                  |
+| failed       | Bool           | Wether or not scan was unsuccesful               |
+| anonimity    | String         | The proxy's anonimity level                      |
+| workingCount | Number         | How many times this proxy was succesfully tested |
+| recheckCount | Number         | How many times this proxy was checked            |
+| uptime       | Number         | The uptime ration of this proxy                  |
 
 ### ProxyLocation
 
