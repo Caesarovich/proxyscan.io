@@ -14,6 +14,7 @@
     "newLine": "lf",
     "noEmitHelpers": true,
     "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
