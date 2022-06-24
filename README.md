@@ -27,13 +27,7 @@ This will build the package into the `dist` directory.
 
 ## ⏳ Quick start
 
-You first need to import the library.
-
-```js
-const proxyscan-io = require('proxyscan.io');
-```
-
-Then use the `fetchProxies` function to fetch proxies from the API.
+Use the `fetchProxies` function to fetch proxies from the API.
 
 ```js
 import { fetchProxies } from 'proxyscan.io';
@@ -75,19 +69,17 @@ fetchProxies().then(console.log);
 
 The fetch options allows for more precise API requests. I strongly recommend using at least some.
 
-| Option      | Value                               | Description                                                 |
-| ----------- | ----------------------------------- | ----------------------------------------------------------- |
-| level       | 'transparent', 'anonymous', 'elite' | Anonymity Level                                             |
-| type        | 'http', 'https', 'socks4', 'socks5' | Proxy Protocol                                              |
-| last_check  | Number                              | Seconds the proxy was last checked                          |
-| port        | Number (1 - 65535)                  | Proxies with a specific port                                |
-| ping        | Number                              | How fast you get a response after you've sent out a request |
-| limit       | Number (1 - 20)                     | How many proxies to list.                                   |
-| uptime      | Number (1 - 100)                    | How reliably a proxy has been running                       |
-| country     | String (eg: 'EN, US')               | Country of the proxy                                        |
-| not_country | String (eg: 'CN, NL')               | Avoid proxy countries                                       |
-
-> Note: using `format: 'txt'` will result in the function returning a `Promise\<String>`.
+| Option         | Value                               | Description                                                 |
+| -------------- | ----------------------------------- | ----------------------------------------------------------- |
+| level          | 'transparent', 'anonymous', 'elite' | Anonymity Level                                             |
+| type           | 'http', 'https', 'socks4', 'socks5' | Proxy Protocol                                              |
+| last_check     | Number                              | Seconds the proxy was last checked                          |
+| port           | Number (1 - 65535)                  | Proxies with a specific port                                |
+| ping           | Number                              | How fast you get a response after you've sent out a request |
+| limit          | Number (1 - 20)                     | How many proxies to list.                                   |
+| uptime         | Number (1 - 100)                    | How reliably a proxy has been running                       |
+| countries      | string[] (eg: ['EN', 'US'])         | The countries the proxies must be located into.             |
+| avoidCountries | string[] (eg: ['CN', 'NL'])         | The countries the proxies must NOT be located into.         |
 
 ### Proxy
 

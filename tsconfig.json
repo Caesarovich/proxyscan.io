@@ -3,7 +3,7 @@
     "strict": true,
     "alwaysStrict": true,
     "outDir": "dist",
-    "module": "CommonJS",
+    "module": "ES6",
     "moduleResolution": "Node",
     "target": "ES6",
     "declaration": true,
