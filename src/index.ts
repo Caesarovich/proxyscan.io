@@ -129,6 +129,9 @@ function fetchOptionsToParams(options?: FetchOptions): URLSearchParams {
 export async function fetchProxies(options?: FetchOptions): Promise<Proxy[]> {
   const { body } = await got.get('https://www.proxyscan.io/api/proxy', {
     searchParams: fetchOptionsToParams(options),
+    timeout: {
+      request: 10000,
+    },
   });
 
   const rawData: RawProxy[] = JSON.parse(body);
