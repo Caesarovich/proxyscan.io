@@ -39,7 +39,7 @@ fetchProxies()
 
 ## 📔 Documentation
 
-### fetchProxies(options?: FetchOptions)
+### fetchProxies(proxyOptions?: ProxyOptions, requestOptions?: RequestOptions)
 
 The `fetchProxies` function will make an HTTP GET call to the API and retrieve results based on the specified options.
 
@@ -65,9 +65,9 @@ fetchProxies().then(console.log);
 
 #### Returns: Promise<Proxy[]>
 
-### FetchOptions
+### ProxyOptions
 
-The fetch options allows for more precise API requests. I strongly recommend using at least some.
+The proxy options allows for more precise API requests. I strongly recommend using at least some.
 
 | Option         | Value                               | Description                                                 |
 | -------------- | ----------------------------------- | ----------------------------------------------------------- |
@@ -80,6 +80,14 @@ The fetch options allows for more precise API requests. I strongly recommend usi
 | uptime         | Number (1 - 100)                    | How reliably a proxy has been running                       |
 | countries      | string[] (eg: ['EN', 'US'])         | The countries the proxies must be located into.             |
 | avoidCountries | string[] (eg: ['CN', 'NL'])         | The countries the proxies must NOT be located into.         |
+
+### RequestOptions
+
+These options are related to the way [Got](https://www.npmjs.com/package/got) will handle the request.
+
+| Option  | Value  | Description                                                                          |
+| ------- | ------ | ------------------------------------------------------------------------------------ |
+| timeout | Number | Milliseconds to wait for the server to end the response before aborting the request. |
 
 ### Proxy
 

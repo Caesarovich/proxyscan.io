@@ -4,7 +4,7 @@ export type AnonymityLevel = 'transparent' | 'anonymous' | 'elite';
 
 export type ProxyProtocol = 'http' | 'https' | 'socks4' | 'socks5';
 
-export interface FetchOptions {
+export interface ProxyOptions {
   /**
    * Anonymity Level.
    */
@@ -46,6 +46,15 @@ export interface FetchOptions {
    * @example ['cn', 'us']
    */
   avoidCountries?: string[];
+}
+
+export interface RequestOptions {
+  /**
+   * Milliseconds to wait for the server to end the response before aborting the request.
+   *
+   * @default 10000
+   */
+  timeout?: number;
 }
 
 interface RawProxy {
@@ -108,7 +117,7 @@ function parseRawProxy(raw: RawProxy): Proxy {
   };
 }
 
-function fetchOptionsToParams(options?: FetchOptions): URLSearchParams {
+function proxyOptionsToParams(options?: ProxyOptions): URLSearchParams {
   let params = new URLSearchParams();
 
   if (options?.level) params.set('level', options.level);
@@ -126,11 +135,14 @@ function fetchOptionsToParams(options?: FetchOptions): URLSearchParams {
   return params;
 }
 
-export async function fetchProxies(options?: FetchOptions): Promise<Proxy[]> {
+export async function fetchProxies(
+  proxyOptions?: ProxyOptions,
+  requestOptions?: RequestOptions
+): Promise<Proxy[]> {
   const { body } = await got.get('https://www.proxyscan.io/api/proxy', {
-    searchParams: fetchOptionsToParams(options),
+    searchParams: proxyOptionsToParams(proxyOptions),
     timeout: {
-      request: 10000,
+      request: requestOptions?.timeout ?? 10000,
     },
   });
 
