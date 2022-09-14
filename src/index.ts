@@ -108,9 +108,9 @@ function parseRawProxy(raw: RawProxy): Proxy {
     ping: raw.Ping,
     time: raw.Time,
     location: raw.Location,
-    types: raw.Type,
+    types: raw.Type.map((type) => type.toLocaleLowerCase() as ProxyProtocol),
     failed: raw.Failed,
-    anonymity: raw.Anonymity,
+    anonymity: raw.Anonymity.toLowerCase() as AnonymityLevel,
     workingCount: raw.WorkingCount,
     uptime: raw.Uptime,
     recheckCount: raw.RecheckCount,
@@ -154,3 +154,5 @@ export async function fetchProxies(
   }
   return proxies;
 }
+
+console.log(fetchProxies().then(console.log));
