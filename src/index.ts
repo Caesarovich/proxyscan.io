@@ -154,5 +154,3 @@ export async function fetchProxies(
   }
   return proxies;
 }
-
-console.log(fetchProxies().then(console.log));
